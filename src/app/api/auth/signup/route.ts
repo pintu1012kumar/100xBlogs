@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/app/lib/prisma";
 import bcrypt from "bcrypt";
+import { generateToken } from "@/app/lib/auth"; // 
 
 export async function POST(req: NextRequest) {
   try {
@@ -27,9 +28,12 @@ export async function POST(req: NextRequest) {
       },
     });
 
+    const token = generateToken({ id: user.id, email: user.email }); 
+
     return NextResponse.json(
       {
         message: "User created successfully",
+        token, 
         user: {
           id: user.id,
           name: user.name,
