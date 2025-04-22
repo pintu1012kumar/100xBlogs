@@ -55,9 +55,17 @@ export const HeroParallax = ({
   return (
     <div
       ref={ref}
-      className="h-[300vh] py-40 overflow-hidden  antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[300vh] py-40 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
+      {/* Sign Up button at the top-right */}
+      <div className="absolute top-0 right-0 m-4">
+        <button className="px-6 py-2 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition">
+          Login
+        </button>
+      </div>
+
       <Header />
+
       <motion.div
         style={{
           rotateX,
@@ -108,7 +116,7 @@ export const Header = () => {
       <p className="max-w-2xl text-base md:text-xl mt-8 dark:text-neutral-200">
         A platform for sharing thoughts, stories, and ideas with the world.
         Whether you're a writer, creator, or reader, this app offers a space to
-        connect, engage, and grow. 
+        connect, engage, and grow.{" "}
       </p>
     </div>
   );
@@ -136,13 +144,16 @@ export const ProductCard = ({
       key={product.title}
       className="group/product h-96 w-[30rem] relative shrink-0"
     >
-    <a href={product.link} className="block group-hover/product:shadow-2xl relative w-full h-96">
-  <img
-    src={product.thumbnail}
-    alt={product.title}
-    className="object-cover w-full h-full"
-  />
-</a>
+      <a
+        href={product.link}
+        className="block group-hover/product:shadow-2xl relative w-full h-96"
+      >
+        <img
+          src={product.thumbnail}
+          alt={product.title}
+          className="object-cover w-full h-full"
+        />
+      </a>
 
       <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-80 bg-black pointer-events-none"></div>
       <h2 className="absolute bottom-4 left-4 opacity-0 group-hover/product:opacity-100 text-white">
