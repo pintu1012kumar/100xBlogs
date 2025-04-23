@@ -17,7 +17,7 @@ const SignupFormDemo = () => {
         Welcome to 100xBlogs
       </h2>
       <p className="mt-2 max-w-sm text-sm text-neutral-600 dark:text-neutral-300">
-        Login to 100xBlogs if you can because we don&apos;t have a login flow
+        Signup to 100xBlogs if you can because we don&apos;t have a login flow
         yet
       </p>
 

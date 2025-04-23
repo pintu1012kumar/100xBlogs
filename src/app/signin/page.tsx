@@ -3,21 +3,21 @@ import React from "react";
 import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
 import { cn } from "@/app/lib/utils";
-
+import { useRouter } from 'next/navigation'
 
 const SignupFormDemo = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Form submitted");
   };
-
+const router = useRouter();
   return (
     <div className="shadow-input mx-auto w-full max-w-md rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black mt-30">
       <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">
         Welcome to 100xBlogs
       </h2>
       <p className="mt-2 max-w-sm text-sm text-neutral-600 dark:text-neutral-300">
-        Login to 100xBlogs if you can because we don&apos;t have a login flow
+        Signin to 100xBlogs if you can because we don&apos;t have a login flow
         yet
       </p>
 
@@ -46,6 +46,19 @@ const SignupFormDemo = () => {
           Sign in &rarr;
           <BottomGradient />
         </button>
+
+        <div className="text-center mt-4">
+      <div>hey</div>
+      <p className="mt-2 text-sm text-gray-600">
+        Already don't have an account?{' '}
+        <span
+          onClick={() => router.push('/signup')}
+          className="text-blue-600 hover:underline cursor-pointer"
+        >
+          Click here to Signup
+        </span>
+      </p>
+    </div>
 
         <div className="my-8 h-[1px] w-full bg-gradient-to-r from-transparent via-neutral-300 to-transparent dark:via-neutral-700" />
       </form>
