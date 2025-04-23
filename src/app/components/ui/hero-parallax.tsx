@@ -8,6 +8,8 @@ import {
   MotionValue,
 } from "motion/react";
 
+import { useRouter } from 'next/navigation'
+
 export const HeroParallax = ({
   products,
 }: {
@@ -25,7 +27,9 @@ export const HeroParallax = ({
     target: ref,
     offset: ["start start", "end start"],
   });
-
+  
+  const router = useRouter();
+  
   const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
 
   const translateX = useSpring(
@@ -59,10 +63,13 @@ export const HeroParallax = ({
     >
       {/* Sign Up button at the top-right */}
       <div className="absolute top-0 right-0 m-4">
-        <button className="px-6 py-2 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition">
-          Login
-        </button>
-      </div>
+      <button
+        className="px-6 py-2 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition"
+        onClick={() => router.push('/signup')}
+      >
+        Login
+      </button>
+    </div>
 
       <Header />
 
