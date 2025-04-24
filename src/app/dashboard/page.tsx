@@ -1,7 +1,9 @@
+import { CardHoverEffectDemo } from "../components/cards";
+
 const HelloWorld = () => {
     return (
       <div>
-        <h1>Hello, Next.js World!</h1>
+        <CardHoverEffectDemo/> 
       </div>
     );
   };
