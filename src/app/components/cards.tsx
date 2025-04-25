@@ -26,7 +26,7 @@ export function CardHoverEffectDemo() {
         const parsedProjects = posts.map((post: any) => ({
           title: post.title,
           description: post.content,
-          link: `/post/${post.id}` // You can change this as needed
+          link: `/blog/${post.id}` // You can change this as needed
         }));
 
         setProjects(parsedProjects);
