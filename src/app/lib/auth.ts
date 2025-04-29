@@ -1,16 +1,19 @@
 // src/lib/auth.ts
+import jwt, { JwtPayload } from "jsonwebtoken";
 
-import jwt from "jsonwebtoken";
-
-const SECRET = process.env.JWT_SECRET || "supersecretkey"; // Store real key in .env
+const SECRET = process.env.JWT_SECRET || "supersecretkey";
 
 export function generateToken(payload: object) {
   return jwt.sign(payload, SECRET, { expiresIn: "7d" });
 }
 
-export function verifyToken(token: string) {
+export function verifyToken(token: string): JwtPayload | null {
   try {
-    return jwt.verify(token, SECRET);
+    const decoded = jwt.verify(token, SECRET);
+    if (typeof decoded === "string") {
+      return null;
+    }
+    return decoded as JwtPayload;
   } catch {
     return null;
   }

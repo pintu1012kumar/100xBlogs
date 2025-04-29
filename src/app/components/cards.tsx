@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { HoverEffect } from "../components/ui/card-hover-effect";
 
+
 type Project = {
   title: string;
   description: string;
@@ -26,7 +27,7 @@ export function CardHoverEffectDemo() {
         const parsedProjects = posts.map((post: any) => ({
           title: post.title,
           description: post.content,
-          link: `/blog/${post.id}` // You can change this as needed
+          link: `/blog/${post.id}`, // You can change this as needed
         }));
 
         setProjects(parsedProjects);
@@ -46,7 +47,13 @@ export function CardHoverEffectDemo() {
       {loading ? (
         <p className="text-center text-zinc-400 text-lg">Loading projects...</p>
       ) : (
-        <HoverEffect items={projects} />
+        <div>
+          {/* <div className="flex justify-end">
+            <LogoutButton />
+            <AddPost/>
+          </div> */}
+          <HoverEffect items={projects} />
+        </div>
       )}
     </div>
   );

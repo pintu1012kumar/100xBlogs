@@ -1,19 +1,28 @@
-// Middleware to check authentication for API routes
-
-import { NextRequest, NextResponse } from "next/server";
-import { verifyToken } from "@/app/lib/auth";
+// middleware.ts
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { verifyToken } from "@/app/lib/auth"; // Apna token verify karne ka function
 
 export function middleware(req: NextRequest) {
-  const token = req.headers.get("authorization")?.replace("Bearer ", "");
+  const token = req.cookies.get("token")?.value;
 
-  if (!token || !verifyToken(token)) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const { pathname } = req.nextUrl;
+
+  const user = verifyToken(token || "");
+
+  // Agar user login nahi hai aur dashboard ja raha hai
+  if (pathname.startsWith("/dashboard") && !user) {
+    return NextResponse.redirect(new URL("/signin", req.url));
+  }
+
+  // Agar user login hai aur signin/signup ja raha hai
+  if ((pathname === "/signin" || pathname === "/signup") && user) {
+    return NextResponse.redirect(new URL("/dashboard", req.url));
   }
 
   return NextResponse.next();
 }
 
-// Optional: Apply to specific routes only
 export const config = {
-  matcher: ["/api/protected-route"],
+  matcher: ["/dashboard", "/signin", "/signup"],
 };

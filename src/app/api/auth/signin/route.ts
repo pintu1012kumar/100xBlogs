@@ -28,10 +28,10 @@ export async function POST(req: NextRequest) {
 
     const token = generateToken({ id: user.id, email: user.email });
 
-    return NextResponse.json(
+    // ✅ IMPORTANT: Cookie set karo
+    const response = NextResponse.json(
       {
         message: "Sign in successful",
-        token, 
         user: {
           id: user.id,
           name: user.name,
@@ -40,6 +40,15 @@ export async function POST(req: NextRequest) {
       },
       { status: 200 }
     );
+
+    response.cookies.set("token", token, {
+      httpOnly: true,
+      path: "/",
+      maxAge: 7 * 24 * 60 * 60, // 7 days
+    });
+
+    return response;
+
   } catch (error) {
     console.error("Signin Error:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
