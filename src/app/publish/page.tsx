@@ -1,20 +1,21 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation"; 
 
-export function NewPostForm({ onClose }: { onClose: () => void }) {
+export default function PublishPage() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
+  const router = useRouter(); 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
 
     try {
-      const token = localStorage.getItem("token"); // Get the JWT token from localStorage
+      const token = localStorage.getItem("token"); 
 
       if (!token) {
         setError("No token found. Please sign in again.");
@@ -26,7 +27,7 @@ export function NewPostForm({ onClose }: { onClose: () => void }) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Send the token
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ title, content }),
       });
@@ -38,8 +39,7 @@ export function NewPostForm({ onClose }: { onClose: () => void }) {
         return;
       }
 
-      // Successfully created post, close form
-      onClose();
+      router.push("/dashboard"); 
     } catch (error) {
       console.error("Error creating post:", error);
       setError("An error occurred. Please try again.");
@@ -78,7 +78,7 @@ export function NewPostForm({ onClose }: { onClose: () => void }) {
         <div className="flex justify-between mt-4">
           <button
             type="button"
-            onClick={onClose}
+            onClick={() => window.history.back()} // Go back to previous page
             className="text-gray-600"
           >
             Cancel

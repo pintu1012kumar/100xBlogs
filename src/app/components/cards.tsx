@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { HoverEffect } from "../components/ui/card-hover-effect";
-import { NewPostForm } from "./NewPostForm";
+import { useRouter } from "next/navigation"; 
 
 type Project = {
   title: string;
@@ -13,7 +13,7 @@ type Project = {
 export function CardHoverEffectDemo() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
-  const [showForm, setShowForm] = useState(false);
+  const router = useRouter(); 
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -41,24 +41,21 @@ export function CardHoverEffectDemo() {
     fetchProjects();
   }, []);
 
-  const handleCloseForm = () => {
-    setShowForm(false);
-  };
-
   const handleOpenForm = () => {
-    setShowForm(true);
+    router.push("/publish"); 
   };
 
   return (
     <div className="max-w-5xl mx-auto px-8 py-10">
-      <button
-        onClick={handleOpenForm}
-        className="bg-blue-500 text-white px-4 py-2 rounded-md mb-4"
-      >
-        New Post
-      </button>
-
-      {showForm && <NewPostForm onClose={handleCloseForm} />}
+      {/* Button shifted to the right */}
+      <div className="flex justify-end mb-4">
+        <button
+          onClick={handleOpenForm}
+          className="bg-blue-500 text-white px-4 py-2 rounded-md"
+        >
+          Publish
+        </button>
+      </div>
 
       {loading ? (
         <p className="text-center text-zinc-400 text-lg">Loading projects...</p>
