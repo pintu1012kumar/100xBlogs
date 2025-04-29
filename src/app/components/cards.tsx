@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { HoverEffect } from "../components/ui/card-hover-effect";
-
+import { NewPostForm } from "./NewPostForm";
 
 type Project = {
   title: string;
@@ -13,21 +13,20 @@ type Project = {
 export function CardHoverEffectDemo() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     const fetchProjects = async () => {
       try {
         const response = await fetch("http://localhost:3000/api/auth/post");
         const data = await response.json();
-        console.log("API response:", data);
 
         const posts = data.posts || [];
 
-        // Convert API response to Project[] format
         const parsedProjects = posts.map((post: any) => ({
           title: post.title,
           description: post.content,
-          link: `/blog/${post.id}`, // You can change this as needed
+          link: `/blog/${post.id}`,
         }));
 
         setProjects(parsedProjects);
@@ -42,16 +41,29 @@ export function CardHoverEffectDemo() {
     fetchProjects();
   }, []);
 
+  const handleCloseForm = () => {
+    setShowForm(false);
+  };
+
+  const handleOpenForm = () => {
+    setShowForm(true);
+  };
+
   return (
     <div className="max-w-5xl mx-auto px-8 py-10">
+      <button
+        onClick={handleOpenForm}
+        className="bg-blue-500 text-white px-4 py-2 rounded-md mb-4"
+      >
+        New Post
+      </button>
+
+      {showForm && <NewPostForm onClose={handleCloseForm} />}
+
       {loading ? (
         <p className="text-center text-zinc-400 text-lg">Loading projects...</p>
       ) : (
         <div>
-          {/* <div className="flex justify-end">
-            <LogoutButton />
-            <AddPost/>
-          </div> */}
           <HoverEffect items={projects} />
         </div>
       )}

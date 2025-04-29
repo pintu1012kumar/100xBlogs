@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/app/lib/prisma";
 import bcrypt from "bcrypt";
-import { generateToken } from "@/app/lib/auth"; // 
+import { generateToken } from "@/app/lib/auth"; 
 
 export async function POST(req: NextRequest) {
   try {
@@ -28,8 +28,9 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    const token = generateToken({ id: user.id, email: user.email }); 
+    const token = generateToken({ id: user.id, email: user.email });
 
+    // Store token in localStorage on frontend after signup
     return NextResponse.json(
       {
         message: "User created successfully",
