@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { HoverEffect } from "../components/ui/card-hover-effect";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
+import LogoutButton from "./logout";
 
 type Project = {
   title: string;
@@ -13,7 +14,7 @@ type Project = {
 export function CardHoverEffectDemo() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
-  const router = useRouter(); 
+  const router = useRouter();
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -42,7 +43,7 @@ export function CardHoverEffectDemo() {
   }, []);
 
   const handleOpenForm = () => {
-    router.push("/publish"); 
+    router.push("/publish");
   };
 
   return (
@@ -55,8 +56,12 @@ export function CardHoverEffectDemo() {
         >
           Publish
         </button>
+        <div className="ml-4 rounded-2xl">
+        <LogoutButton />
+        </div>
+        
       </div>
-
+     
       {loading ? (
         <p className="text-center text-zinc-400 text-lg">Loading projects...</p>
       ) : (
