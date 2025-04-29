@@ -31,6 +31,8 @@ const SignupFormDemo = () => {
       });
 
       if (res.ok) {
+        const data = await res.json();
+        localStorage.setItem("token", data.token); // ✅ Token saved here
         console.log("Signup successful");
         router.push("/dashboard");
       } else {
@@ -97,6 +99,7 @@ const SignupFormDemo = () => {
           Sign up &rarr;
           <BottomGradient />
         </button>
+
         <div className="text-center mt-4">
           <p className="mt-2 text-sm text-gray-600">
             Already have an account?{" "}

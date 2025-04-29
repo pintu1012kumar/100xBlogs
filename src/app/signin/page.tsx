@@ -23,9 +23,22 @@ const SignupFormDemo = () => {
       });
 
       if (res.ok) {
-        // Redirect or show success message
-        console.log("Signin successful");
-        router.push("/dashboard"); // Or any authenticated route
+        // Extract token from the response
+        const data = await res.json();
+        const token = data.token;
+
+        if (token) {
+          // Store token in localStorage for further use
+          localStorage.setItem("token", token);
+
+          // Optionally, you can also set it in a global state or context if needed
+          console.log("Signin successful");
+
+          // Redirect to the dashboard or any authenticated route
+          router.push("/dashboard");
+        } else {
+          alert("Signin failed: Token not found.");
+        }
       } else {
         const errorData = await res.json();
         console.error("Signin failed:", errorData.message || "Unknown error");
@@ -43,8 +56,7 @@ const SignupFormDemo = () => {
         Welcome to 100xBlogs
       </h2>
       <p className="mt-2 max-w-sm text-sm text-neutral-600 dark:text-neutral-300">
-        Signin to 100xBlogs if you can because we don&apos;t have a login flow
-        yet
+        Signin to 100xBlogs if you can because we don&apos;t have a login flow yet
       </p>
 
       <form className="my-8" onSubmit={handleSubmit}>

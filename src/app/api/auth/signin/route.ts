@@ -37,6 +37,7 @@ export async function POST(req: NextRequest) {
           name: user.name,
           email: user.email,
         },
+        token,  // Include token in the response
       },
       { status: 200 }
     );
