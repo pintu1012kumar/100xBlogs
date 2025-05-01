@@ -35,13 +35,13 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json({ id: post.id }, { status: 201 });
-
   } catch (error) {
     console.error("Error in blog POST:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  } finally {
+    await prisma.$disconnect();
   }
 }
-
 
 export async function GET() {
   try {
@@ -58,5 +58,7 @@ export async function GET() {
   } catch (error) {
     console.error("Error fetching posts:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  } finally {
+    await prisma.$disconnect();
   }
 }
