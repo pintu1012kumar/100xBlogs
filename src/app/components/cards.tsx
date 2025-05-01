@@ -12,6 +12,12 @@ type Project = {
   link: string;
 };
 
+type Post = {
+  id: string;
+  title: string;
+  content: string;
+};
+
 export function CardHoverEffectDemo() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
@@ -23,9 +29,9 @@ export function CardHoverEffectDemo() {
         const response = await fetch("http://localhost:3000/api/auth/post");
         const data = await response.json();
 
-        const posts = data.posts || [];
+        const posts: Post[] = data.posts || [];
 
-        const parsedProjects = posts.map((post: any) => ({
+        const parsedProjects: Project[] = posts.map((post) => ({
           title: post.title,
           description: post.content,
           link: `/blog/${post.id}`,

@@ -4,20 +4,14 @@ import * as React from "react";
 import { cn } from "@/app/lib/utils";
 import { useMotionTemplate, useMotionValue, motion } from "motion/react";
 
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {}
-
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
+const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
   ({ className, type, ...props }, ref) => {
-    const radius = 100; // radius of the hover effect
+    const radius = 100;
     const [visible, setVisible] = React.useState(false);
-
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
 
-    function handleMouseMove(
-      e: React.MouseEvent<HTMLDivElement, MouseEvent>
-    ) {
+    function handleMouseMove(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
       const { left, top } = e.currentTarget.getBoundingClientRect();
       mouseX.set(e.clientX - left);
       mouseY.set(e.clientY - top);
