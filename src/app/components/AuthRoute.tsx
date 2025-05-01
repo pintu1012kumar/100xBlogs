@@ -10,7 +10,7 @@ export default function AuthRoute({ children }: { children: React.ReactNode }) {
     if (token) {
       router.push("/dashboard"); // or wherever you want to take logged-in users
     }
-  }, []);
+  }, [router]);
 
   return <>{children}</>;
 }

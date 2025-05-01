@@ -7,8 +7,8 @@ import {
   useSpring,
   MotionValue,
 } from "motion/react";
-
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export const HeroParallax = ({
   products,
@@ -27,9 +27,9 @@ export const HeroParallax = ({
     target: ref,
     offset: ["start start", "end start"],
   });
-  
+
   const router = useRouter();
-  
+
   const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
 
   const translateX = useSpring(
@@ -56,6 +56,7 @@ export const HeroParallax = ({
     useTransform(scrollYProgress, [0, 0.2], [-700, 500]),
     springConfig
   );
+
   return (
     <div
       ref={ref}
@@ -63,13 +64,13 @@ export const HeroParallax = ({
     >
       {/* Sign Up button at the top-right */}
       <div className="absolute top-0 right-0 m-4">
-      <button
-        className="px-6 py-2 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition"
-        onClick={() => router.push('/signup')}
-      >
-        Explore
-      </button>
-    </div>
+        <button
+          className="px-6 py-2 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition"
+          onClick={() => router.push("/signup")}
+        >
+          Explore
+        </button>
+      </div>
 
       <Header />
 
@@ -80,7 +81,6 @@ export const HeroParallax = ({
           translateY,
           opacity,
         }}
-        className=""
       >
         <motion.div className="flex flex-row-reverse space-x-reverse space-x-20 mb-20">
           {firstRow.map((product) => (
@@ -91,7 +91,7 @@ export const HeroParallax = ({
             />
           ))}
         </motion.div>
-        <motion.div className="flex flex-row  mb-20 space-x-20 ">
+        <motion.div className="flex flex-row mb-20 space-x-20">
           {secondRow.map((product) => (
             <ProductCard
               product={product}
@@ -116,14 +116,14 @@ export const HeroParallax = ({
 
 export const Header = () => {
   return (
-    <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full  left-0 top-0">
+    <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full left-0 top-0">
       <h1 className="text-2xl md:text-7xl font-bold dark:text-white">
         Welcome.. <br /> to the 100xBlogs
       </h1>
       <p className="max-w-2xl text-base md:text-xl mt-8 dark:text-neutral-200">
         A platform for sharing thoughts, stories, and ideas with the world.
-        Whether you're a writer, creator, or reader, this app offers a space to
-        connect, engage, and grow.{" "}
+        Whether you&apos;re a writer, creator, or reader, this app offers a
+        space to connect, engage, and grow.
       </p>
     </div>
   );
@@ -155,9 +155,10 @@ export const ProductCard = ({
         href={product.link}
         className="block group-hover/product:shadow-2xl relative w-full h-96"
       >
-        <img
+        <Image
           src={product.thumbnail}
           alt={product.title}
+          fill
           className="object-cover w-full h-full"
         />
       </a>

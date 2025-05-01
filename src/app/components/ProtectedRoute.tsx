@@ -10,7 +10,7 @@ export default function ProtectedRoute({ children }: { children: React.ReactNode
     if (!token) {
       router.push("/signin");
     }
-  }, []);
+  }, [router]);
 
   return <>{children}</>;
 }
