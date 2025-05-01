@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { HoverEffect } from "../components/ui/card-hover-effect";
 import { useRouter } from "next/navigation";
 import LogoutButton from "./logout";
+import Link from "next/link";
 
 type Project = {
   title: string;
@@ -48,20 +49,26 @@ export function CardHoverEffectDemo() {
 
   return (
     <div className="max-w-5xl mx-auto px-8 py-10">
-      {/* Button shifted to the right */}
-      <div className="flex justify-end mb-4">
-        <button
-          onClick={handleOpenForm}
-          className="bg-blue-500 text-white px-4 py-2 rounded-md"
-        >
-          Publish
-        </button>
-        <div className="ml-4 rounded-2xl">
-        <LogoutButton />
+      <div className="flex justify-between items-center mb-4">
+        <Link href="/">
+          <div className="text-3xl font-bold text-blue-600 cursor-pointer hover:opacity-80">
+            100xBlogs
+          </div>
+        </Link>
+
+        <div className="flex items-center">
+          <button
+            onClick={handleOpenForm}
+            className="bg-blue-500 text-white px-4 py-2 rounded-md"
+          >
+            Publish
+          </button>
+          <div className="ml-4 rounded-2xl">
+            <LogoutButton />
+          </div>
         </div>
-        
       </div>
-     
+
       {loading ? (
         <p className="text-center text-zinc-400 text-lg">Loading projects...</p>
       ) : (

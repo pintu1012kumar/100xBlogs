@@ -1,12 +1,15 @@
 import { CardHoverEffectDemo } from "../components/cards";
+import ProtectedRoute from "../components/ProtectedRoute";
 
 const HelloWorld = () => {
-    return (
+  return (
+    <ProtectedRoute>
       <div>
-        <CardHoverEffectDemo/> 
+       
+        <CardHoverEffectDemo />
       </div>
-    );
-  };
-  
-  export default HelloWorld;
-  
+    </ProtectedRoute>
+  );
+};
+
+export default HelloWorld;

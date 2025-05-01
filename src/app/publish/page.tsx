@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation"; 
+import ProtectedRoute from "../components/ProtectedRoute";
 
 export default function PublishPage() {
   const [title, setTitle] = useState("");
@@ -49,6 +50,7 @@ export default function PublishPage() {
   };
 
   return (
+    <ProtectedRoute>
     <div className="w-full max-w-md mx-auto p-4">
       <h2 className="text-xl font-semibold mb-4">Create New Post</h2>
       <form onSubmit={handleSubmit}>
@@ -93,5 +95,6 @@ export default function PublishPage() {
         </div>
       </form>
     </div>
+    </ProtectedRoute>
   );
 }

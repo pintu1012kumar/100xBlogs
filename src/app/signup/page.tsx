@@ -4,6 +4,7 @@ import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
 import { cn } from "@/app/lib/utils";
 import { useRouter } from "next/navigation";
+import AuthRoute from "../components/AuthRoute";
 
 const SignupFormDemo = () => {
   const router = useRouter();
@@ -45,6 +46,7 @@ const SignupFormDemo = () => {
   };
 
   return (
+    <AuthRoute>
     <div className="shadow-input mx-auto w-full max-w-md rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black mt-30">
       <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">
         Welcome to 100xBlogs
@@ -115,6 +117,7 @@ const SignupFormDemo = () => {
         <div className="my-8 h-[1px] w-full bg-gradient-to-r from-transparent via-neutral-300 to-transparent dark:via-neutral-700" />
       </form>
     </div>
+    </AuthRoute>
   );
 };
 
