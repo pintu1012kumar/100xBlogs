@@ -24,7 +24,7 @@ export default function PublishPage() {
         return;
       }
 
-      const response = await fetch("http://localhost:3000/api/auth/post", {
+      const response = await fetch("/api/auth/post", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

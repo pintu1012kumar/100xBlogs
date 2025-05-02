@@ -26,7 +26,7 @@ export function CardHoverEffectDemo() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/auth/post");
+        const response = await fetch("/api/auth/post");
         const data = await response.json();
 
         const posts: Post[] = data.posts || [];
