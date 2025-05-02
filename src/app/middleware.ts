@@ -1,28 +1,31 @@
-// middleware.ts
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import { verifyToken } from "@/app/lib/auth"; // Apna token verify karne ka function
+import { NextRequest, NextResponse } from 'next/server'
+
+const corsOptions = {
+  'Access-Control-Allow-Origin': '*', // Allow all origins
+  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+}
 
 export function middleware(req: NextRequest) {
-  const token = req.cookies.get("token")?.value;
+  const isPreflight = req.method === 'OPTIONS'
 
-  const { pathname } = req.nextUrl;
-
-  const user = verifyToken(token || "");
-
-  // Agar user login nahi hai aur dashboard ja raha hai
-  if (pathname.startsWith("/dashboard") && !user) {
-    return NextResponse.redirect(new URL("/signin", req.url));
+  // Handle preflight CORS
+  if (isPreflight && req.nextUrl.pathname.startsWith('/api')) {
+    return NextResponse.json({}, { headers: corsOptions })
   }
 
-  // Agar user login hai aur signin/signup ja raha hai
-  if ((pathname === "/signin" || pathname === "/signup") && user) {
-    return NextResponse.redirect(new URL("/dashboard", req.url));
+  const res = NextResponse.next()
+
+  // Set CORS headers for API routes
+  if (req.nextUrl.pathname.startsWith('/api')) {
+    Object.entries(corsOptions).forEach(([key, value]) => {
+      res.headers.set(key, value)
+    })
   }
 
-  return NextResponse.next();
+  return res
 }
 
 export const config = {
-  matcher: ["/dashboard", "/signin", "/signup"],
-};
+  matcher: ['/api/:path*'], // Only apply middleware to API routes
+}
