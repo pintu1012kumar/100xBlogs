@@ -18,14 +18,16 @@ type Post = {
   content: string;
 };
 
-export default function DashboardWithIdeasAndPosts() {
+export function CardHoverEffectDemo() {
   const [projects, setProjects] = useState<Project[]>([]);
-  const [loadingProjects, setLoadingProjects] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+
+  // Sidebar State
   const [isOpen, setIsOpen] = useState(false);
   const [topic, setTopic] = useState("");
   const [ideas, setIdeas] = useState<string | null>(null);
   const [loadingIdeas, setLoadingIdeas] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -46,7 +48,7 @@ export default function DashboardWithIdeasAndPosts() {
         console.error("Failed to fetch projects:", error);
         setProjects([]);
       } finally {
-        setLoadingProjects(false);
+        setLoading(false);
       }
     };
 
@@ -72,36 +74,41 @@ export default function DashboardWithIdeasAndPosts() {
   return (
     <div className="relative min-h-screen bg-gray-100 dark:bg-gray-900 p-6">
       {/* Top Navbar */}
-      <div className="max-w-5xl mx-auto px-4 py-6 flex justify-between items-center">
-        <Link href="/">
-          <div className="text-3xl font-bold text-blue-600 cursor-pointer hover:opacity-80">
-            100xBlogs
+      <div className="max-w-5xl mx-auto px-8 py-10">
+        <div className="flex justify-between items-center mb-4">
+          <Link href="/">
+            <div className="text-3xl font-bold text-blue-600 cursor-pointer hover:opacity-80">
+              100xBlogs
+            </div>
+          </Link>
+
+          <div className="flex items-center gap-3">
+            <button
+              onClick={handleOpenForm}
+              className="bg-blue-500 text-white px-4 py-2 rounded-md"
+            >
+              Publish
+            </button>
+
+            <button
+              onClick={() => setIsOpen(true)}
+              className="bg-green-600 text-white px-4 py-2 rounded-md"
+            >
+              💡 Get Blog Ideas
+            </button>
+
+            <div className="rounded-2xl">
+              <LogoutButton />
+            </div>
           </div>
-        </Link>
-
-        <div className="flex items-center gap-3">
-          <button
-            onClick={handleOpenForm}
-            className="bg-blue-500 text-white px-4 py-2 rounded-md"
-          >
-            Publish
-          </button>
-          <button
-            onClick={() => setIsOpen(true)}
-            className="bg-green-600 text-white px-4 py-2 rounded-md"
-          >
-            💡 Get Blog Ideas
-          </button>
-          <LogoutButton />
         </div>
-      </div>
 
-      {/* Blog Posts */}
-      <div className="max-w-5xl mx-auto px-4">
-        {loadingProjects ? (
-          <p className="text-center text-zinc-400 text-lg">Loading posts...</p>
+        {loading ? (
+          <p className="text-center text-zinc-400 text-lg">Loading projects...</p>
         ) : (
-          <HoverEffect items={projects} />
+          <div>
+            <HoverEffect items={projects} />
+          </div>
         )}
       </div>
 
@@ -147,7 +154,7 @@ export default function DashboardWithIdeasAndPosts() {
         </div>
       </div>
 
-      {/* Dark Overlay */}
+      {/* Overlay for Sidebar */}
       {isOpen && (
         <div
           onClick={() => setIsOpen(false)}
